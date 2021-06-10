@@ -273,6 +273,34 @@ $(document).ready(() => {
       });
   });
 
+  // Set up individual "search job" handler
+  $('.js-find-tree').on('click', function (e) {
+    e.preventDefault();
+    const queueName = $('.js-queue-input-search').val();
+    const jobId = $('.js-job-id-input-search').val();
+    const depth = $('.js-depth-input-search').val();
+    const maxChildren = $('.js-max-children-input-search').val();
+    const {flowHost, connectionName} = window.arenaInitialPayload;
+    $.ajax({
+      url: `${basePath}/api/flow/${encodeURIComponent(
+        flowHost
+      )}/${encodeURIComponent(
+        connectionName
+      )}/flow?jobId=${jobId}&queueName=${queueName}&depth=${depth}&maxChildren=${maxChildren}`,
+      type: 'GET',
+      contentType: 'application/json',
+    })
+      .done((res) => {
+        alert('Job info successfully fetched!');
+        $('#tree').treeview({data: formatToTreeView([{...res}], [])});
+        $('.js-tree').show();
+      })
+      .fail((jqXHR) => {
+        window.alert('Failed to get job info, check console for error.');
+        console.error(jqXHR.responseText);
+      });
+  });
+
   $('.js-add-flow').on('click', function () {
     const data = window.jsonEditor.get();
     const flow = JSON.stringify({data});

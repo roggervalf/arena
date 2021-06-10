@@ -1,37 +1,43 @@
-<h2>Flow <code>{{ flowHost }}/{{ connectionName }}</code></h2>
-
+<head>
+  <link rel="stylesheet" href="{{ basePath }}/custom.css">
+</head>
+<h2>Job Finder</h2>
 <div class="row">
-  <div class="col-sm-6">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <div class="js-toggle-add-flow-editor  btn btn-default btn-xs pull-right">Add Flow</div>
-        <h4 class="panel-title">Flow Panel</h4>
-      </div>
-      <div class="panel-body">
-        <div class="jsoneditorx form-group hide overflow-hidden">
-          <div class="jsoneditorx hide" id="jsoneditor" style="height:300px;"></div>
-          <br />
-          <div class="form-inline pull-right">
-            <div class="js-add-flow btn btn-primary btn-sm">Create</div>
-          </div>
-        </div>
-      </div>
-    </div>
+  <div class="col-sm-2 right-buffer">
+    <h5>Queue Name</h5>
+    <input class="js-queue-input-search" type="text" name="queueNameInputSearch">
   </div>
-  <div class="col-sm-6">
+  <div class="col-sm-2 right-buffer">
+    <h5>Job Id</h5>
+    <input class="js-job-id-input-search" type="text" name="jobIdInputSearch" value={{id}}>
+  </div>
+  <div class="col-sm-2 right-buffer">
+    <h5>Tree depth</h5>
+    <input class="js-depth-input-search" type="text" name="depthInputSearch">
+  </div>
+  <div class="col-sm-2 right-buffer">
+    <h5>Limit Children</h5>
+    <input class="js-max-children-input-search" type="text" name="maxChildrenInputSearch">
+  </div>
+</div>
+<div class="row top-buffer">
+  <div class="col-sm-3">
+    <button class="btn btn-success js-find-tree">Display Tree</button>
+  </div>
+</div>
+<div class="row top-buffer js-tree">
+  <div class="col-sm-9">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h4 class="panel-title">Redis Statistics</h4>
+        <h4 class="panel-title">Job Relations</h4>
       </div>
       <div class="panel-body">
-        <table class="table">
-          {{#each stats}}
-          <tr>
-            <th>{{ @key }}</th>
-            <th>{{ this }}</th>
-          </tr>
-          {{/each}}
-        </table>
+        <div class="row">
+          <div class="col-sm-6">
+            <div id="tree"></div>
+          </div>
+          <div class="col-sm-6"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -39,7 +45,6 @@
 
 <div class="row">
   <div class="col-sm-6">
-    <div class="js-get-flow btn btn-primary btn-sm">See flow tree</div>
     <div id="tree"></div>
   </div>
   <div class="col-sm-6"></div>
@@ -48,11 +53,10 @@
 {{#contentFor 'sidebar'}}
 <li><a href="{{ basePath }}/">Queues Overview</a></li>
 <li><a href="{{ basePath }}/flows/">Flows Overview</a></li>
-<li class="active"><a href="#">Flow <code>{{ flowHost }}/{{ connectionName }}</code></a></li>
+<li class="active"><a href="#">Job Finder</a></li>
 {{/contentFor}}
 
 {{#contentFor 'script'}}
-window.jsonEditor = new JSONEditor(document.getElementById('jsoneditor'), { modes: ['code','tree','text'] });
 window.arenaInitialPayload = {
 flowHost: "{{ flowHost }}",
 connectionName: "{{ connectionName }}"
