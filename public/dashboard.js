@@ -14,14 +14,17 @@ $(document).ready(() => {
       };
       const isLeaf = Object.keys(child).length === 1;
       if (isLeaf) {
-        arr.push({text: child['job'].name});
+        arr.push({
+          text: `${child['job'].name} <span class="label label-default">${child['job'].id}</span>`,
+        });
       } else {
         for (const property in child) {
+          const childProperty = child[property];
           if (property === 'job') {
-            newObject.text = child[property].name;
+            newObject.text = `${childProperty.name} <span class="label label-default">${childProperty.id}</span>`;
           } else if (property === 'children') {
             const nodes = [];
-            newObject.nodes = formatToTreeView(child[property], nodes);
+            newObject.nodes = formatToTreeView(childProperty, nodes);
             arr.push(newObject);
           } else {
             arr.push({

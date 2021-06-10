@@ -62,9 +62,17 @@ async function main() {
     queueName: parentQueueName,
     data: {},
     children: [
-      {name: 'child', data: {idx: 0, foo: 'bar'}, queueName},
-      {name: 'child', data: {idx: 1, foo: 'baz'}, queueName},
-      {name: 'child', data: {idx: 2, foo: 'qux'}, queueName},
+      {
+        name: 'child-1',
+        data: {idx: 0, foo: 'bar'},
+        queueName,
+        children: [
+          {name: 'grand-child-1', data: {idx: 1, foo: 'bar'}, queueName},
+          {name: 'grand-child-2', data: {idx: 2, foo: 'bar'}, queueName},
+        ],
+      },
+      {name: 'child-2', data: {idx: 3, foo: 'baz'}, queueName},
+      {name: 'child-3', data: {idx: 4, foo: 'qux'}, queueName},
     ],
   });
 
