@@ -5,6 +5,35 @@ $(document).ready(() => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
+  /** Function to format Flow data for tree view */
+  const formatToTreeView = (nodeChild, arr) => {
+    for (const child of nodeChild) {
+      const newObject = {
+        text: '',
+        nodes: [],
+      };
+      const isLeaf = Object.keys(child).length === 1;
+      if (isLeaf) {
+        arr.push({text: child['job'].name});
+      } else {
+        for (const property in child) {
+          if (property === 'job') {
+            newObject.text = child[property].name;
+          } else if (property === 'children') {
+            const nodes = [];
+            newObject.nodes = formatToTreeView(child[property], nodes);
+            arr.push(newObject);
+          } else {
+            arr.push({
+              text: newObject.text,
+            });
+          }
+        }
+      }
+    }
+    return arr;
+  };
+
   // Set up individual "retry job" handler
   $('.js-retry-job').on('click', function (e) {
     e.preventDefault();
@@ -265,6 +294,18 @@ $(document).ready(() => {
         window.alert('Failed to save flow, check console for error.');
         console.error(jqXHR.responseText);
       });
+  });
+
+  $('.js-get-flow').on('click', function () {
+    const data = window.jsonEditor.get();
+    const flow = JSON.stringify({data});
+    localStorage.setItem('arena:savedFlow', flow);
+    const {flowHost, connectionName} = window.arenaInitialPayload;
+
+    const flowJson = JSON.parse(flow);
+    const flowData = [{...flowJson.data}];
+
+    $('#tree').treeview({data: formatToTreeView(flowData, [])});
   });
 
   $('.js-pause-queue').on('click', function (e) {

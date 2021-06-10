@@ -10,12 +10,16 @@
     {{#if (useCdn)}}
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css">
+    <!-- Bootstrap Treeview core CSS -->
+    <link rel="stylesheet" href="{{ basePath }}{{ vendorPath }}/bootstrap-treeview.min.css">
     <!-- JSON Viewer -->
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
     {{else}}
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="{{ basePath }}/bootstrap.min.css">
+    <!-- Bootstrap Treeview core CSS -->
+    <link rel="stylesheet" href="{{ basePath }}{{ vendorPath }}/bootstrap-treeview.min.css">
     <!-- JSON Viewer -->
     <link rel="stylesheet" href="{{ basePath }}/highlight.default.min.css">
     <script src="{{ basePath }}/highlight.min.js"></script>
@@ -65,9 +69,11 @@
     {{#if (useCdn)}}
     <script type="text/javascript"
       src="//cdn.jsdelivr.net/combine/npm/jquery@3.5.1,npm/bootstrap@3.4.1/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="{{ basePath }}{{ vendorPath }}/bootstrap-treeview.min.js"></script>
     {{else}}
     <script type="text/javascript" src="{{ basePath }}/jquery.min.js"></script>
     <script type="text/javascript" src="{{ basePath }}/bootstrap.min.js"></script>
+    <script type="text/javascript" src="{{ basePath }}{{ vendorPath }}/bootstrap-treeview.min.js"></script>
     {{/if}}
 
     <script type="text/javascript" src="{{ basePath }}{{ vendorPath }}/jsoneditor.min.js"></script>
