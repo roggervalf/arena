@@ -69,6 +69,20 @@ $(document).ready(() => {
     }
   });
 
+  // Set up individual "search job" handler
+  $('.js-find-tree').on('click', function (e) {
+    e.preventDefault();
+    const queueName = $('.js-queue-input-search').val();
+    const jobId = $('.js-job-id-input-search').val();
+    const depth = $('.js-depth-input-search').val();
+    const maxChildren = $('.js-max-children-input-search').val();
+    $('.js-tree').show();
+    console.log('queueName:', queueName);
+    console.log('jobId:', jobId);
+    console.log('depth:', depth);
+    console.log('maxChildren:', maxChildren);
+  });
+
   // Set up individual "remove job" handler
   $('.js-remove-job').on('click', function (e) {
     e.preventDefault();
